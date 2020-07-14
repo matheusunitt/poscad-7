@@ -1,25 +1,49 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+
+import Layout from './components/Layout';
+import NotFound from './components/NotFound';
+
+import List from './containers/List';
+import AddItem from './containers/AddItem';
+import EditItem from './containers/EditItem';
+
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
+import GlobalStyles from './styles/GlobalStyles';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <Layout>
+              <List />
+            </Layout>
+          </Route>
+
+          <Route path="/novo">
+            <Layout>
+              <AddItem />
+            </Layout>
+          </Route>
+
+          <Route path="/editar/:id">
+            <Layout>
+              <EditItem />
+            </Layout>
+          </Route>
+
+          <Route path="*">
+            <Layout>
+              <NotFound />
+            </Layout>
+          </Route>
+        </Switch>
+      </Router>
+
+      <GlobalStyles />
+    </>
   );
 }
 
