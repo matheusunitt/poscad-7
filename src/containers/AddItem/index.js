@@ -24,6 +24,11 @@ class AddItem extends Component {
     }
   }
 
+  goToPanel = () => {
+    const { history } = this.props;
+    history.push('/');
+  }
+
   handleFormSend = (e) => {
     const { name, inStock, description, price, imageUrl } = this.state;
 
@@ -57,7 +62,7 @@ class AddItem extends Component {
       <Layout>
         <ToastContainer
           position="bottom-center"
-          autoClose={7000}
+          autoClose={false}
           hideProgressBar={false}
           newestOnTop
           closeOnClick
@@ -69,7 +74,7 @@ class AddItem extends Component {
 
         <MainHeader>
           <LinkSecondary href="/">
-            <i className="fa fa-ban" aria-hidden="true"></i> Cancelar
+            <i class="fa fa-arrow-left" aria-hidden="true"></i> Voltar
           </LinkSecondary>
           <Link onClick={this.handleFormSend}>
             <i className="fa fa-check" aria-hidden="true"></i> Adicionar item

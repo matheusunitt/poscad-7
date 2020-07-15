@@ -100,7 +100,7 @@ class List extends Component {
                 </LinkDelete>
               </ItemFooter>
             </Item>
-          ))}
+          )) || []}
         </ItemList>
       </Layout>
     );

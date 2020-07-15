@@ -21,12 +21,19 @@ class EditItem extends Component {
       description: '',
       price: '',
       imageUrl: '',
+      id: '',
+      referenceId: '',
       product_exists: true
     }
   }
 
   componentDidMount = () => {
     this.getItemsFromStorage(this.props.match.params.id);
+  }
+
+  goToPanel = () => {
+    const { history } = this.props;
+    history.push('/');
   }
 
   getItemsFromStorage = (id) => {
@@ -51,6 +58,8 @@ class EditItem extends Component {
         description: lista[0].description,
         price: lista[0].price,
         imageUrl: lista[0].imageUrl,
+        id: lista[0].id,
+        referenceId: index,
       });
 
       return;
@@ -61,7 +70,7 @@ class EditItem extends Component {
   }
 
   handleFormSend = (e) => {
-    const { name, inStock, description, price, imageUrl, referenceId } = this.state;
+    const { name, inStock, description, price, imageUrl, id, referenceId } = this.state;
 
     e.preventDefault();
 
@@ -70,11 +79,13 @@ class EditItem extends Component {
       return;
     }
 
-    const items = [name, inStock, description, price, imageUrl]
+    const items = { name, inStock, description, price, imageUrl, id }
 
     localStorage.setItem(`produto_${referenceId}`, JSON.stringify(items));
 
     toast.success('Os dados foram salvos com sucesso!');
+
+    this.goToPanel();
   }
 
   handleInput = (e) => {
@@ -90,7 +101,7 @@ class EditItem extends Component {
       <Layout>
         <ToastContainer
           position="bottom-center"
-          autoClose={7000}
+          autoClose={false}
           hideProgressBar={false}
           newestOnTop
           closeOnClick
@@ -104,7 +115,7 @@ class EditItem extends Component {
           <>
             <MainHeader>
               <LinkSecondary href="/">
-                <i className="fa fa-ban" aria-hidden="true"></i> Cancelar
+                <i class="fa fa-arrow-left" aria-hidden="true"></i> Voltar
               </LinkSecondary>
               <Link onClick={this.handleFormSend}>
                 <i className="fa fa-check" aria-hidden="true"></i> Salvar alterações
@@ -151,7 +162,8 @@ class EditItem extends Component {
                 onChange={this.handleInput}
                 required />
             </Form>
-          </>) : (<Link href="/">Voltar ao painel</Link>)}
+          </>) : (<Link href="/">Voltar ao painel</Link>)
+        }
       </Layout>
     );
   }
