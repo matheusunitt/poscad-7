@@ -10,7 +10,11 @@ import {
   LinkDelete,
 } from './styles';
 
+import { ToastContainer, toast } from 'react-toastify';
+
 import undefinedImage from '../../assets/undefined.png';
+
+import Layout from '../../components/Layout';
 
 class List extends Component {
   constructor(props) {
@@ -54,15 +58,29 @@ class List extends Component {
     });
 
     this.getItemsFromStorage();
+
+    toast.success('Produto apagado com sucesso!');
   }
 
   render() {
     const { produtos } = this.state;
     return (
-      <>
+      <Layout>
+        <ToastContainer
+          position="bottom-center"
+          autoClose={7000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+
         <MainHeader>
           <Link href="/novo">
-            <i class="fa fa-plus-circle" aria-hidden="true"></i> Adicionar novo item
+            <i className="fa fa-plus-circle" aria-hidden="true"></i> Adicionar novo item
           </Link>
         </MainHeader>
 
@@ -84,7 +102,7 @@ class List extends Component {
             </Item>
           ))}
         </ItemList>
-      </>
+      </Layout>
     );
   }
 }

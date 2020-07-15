@@ -7,6 +7,10 @@ import {
   LinkSecondary,
 } from './styles';
 
+import { ToastContainer, toast } from 'react-toastify';
+
+import Layout from '../../components/Layout';
+
 class AddItem extends Component {
   constructor(props) {
     super(props);
@@ -26,7 +30,7 @@ class AddItem extends Component {
     e.preventDefault();
 
     if (name === '' || inStock === '' || description === '' || price === '' || imageUrl === '') {
-      alert('Campos vazios detectados! Preencha-os antes de enviar.');
+      toast.error('Alguns campos estão vazios.');
       return;
     }
 
@@ -36,6 +40,8 @@ class AddItem extends Component {
     const lastProductId = Object.keys(localStorage).length;
 
     localStorage.setItem(`produto_${lastProductId}`, JSON.stringify(items));
+
+    toast.success('Os dados foram criados com sucesso!');
   }
 
   handleInput = (e) => {
@@ -48,13 +54,25 @@ class AddItem extends Component {
   render() {
     const { name, inStock, description, price, imageUrl } = this.state;
     return (
-      <>
+      <Layout>
+        <ToastContainer
+          position="bottom-center"
+          autoClose={7000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+
         <MainHeader>
           <LinkSecondary href="/">
-            <i class="fa fa-ban" aria-hidden="true"></i> Cancelar
+            <i className="fa fa-ban" aria-hidden="true"></i> Cancelar
           </LinkSecondary>
           <Link onClick={this.handleFormSend}>
-            <i class="fa fa-check" aria-hidden="true"></i> Adicionar item
+            <i className="fa fa-check" aria-hidden="true"></i> Adicionar item
           </Link>
         </MainHeader>
 
@@ -98,7 +116,7 @@ class AddItem extends Component {
             onChange={this.handleInput}
             required />
         </Form>
-      </>
+      </Layout>
     );
   }
 }

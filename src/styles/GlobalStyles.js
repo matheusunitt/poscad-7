@@ -8,6 +8,10 @@ export default createGlobalStyle`
     color: var(--black);
   }
 
+  .Toastify__toast-body {
+    color: var(--white);
+  }
+
   html, body, #root {
     max-height: 100vh;
     max-width: 100vw;
