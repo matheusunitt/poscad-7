@@ -28,4 +28,4 @@
 
 ## Plataforma
 
-- O projeto foi hospedado no GitHub, justamente com deploy no Netlify.
+- O projeto foi hospedado no GitHub, juntamente com deploy no Netlify.
