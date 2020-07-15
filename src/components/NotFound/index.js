@@ -1,18 +1,15 @@
 import React from 'react';
 
-import { Link } from 'react-router-dom';
-
 import {
-  Button
+  Container,
+  Link,
 } from './styles';
 
 const NotFound = () => (
-  <>
+  <Container>
     <p>A página especificada não existe ou foi removida.</p>
-    <Link to="/">
-      <Button>Voltar ao painel</Button>
-    </Link>
-  </>
+    <Link href="/">Voltar ao painel</Link>
+  </Container>
 );
 
 export default NotFound;

@@ -25,10 +25,17 @@ class AddItem extends Component {
 
     e.preventDefault();
 
-    if (name == '' || inStock == '' || description == '' || price == '' || imageUrl == '') {
-      alert('One or more values empty.');
+    if (name === '' || inStock === '' || description === '' || price === '' || imageUrl === '') {
+      alert('Campos vazios detectados! Preencha-os antes de enviar.');
       return;
     }
+
+    let id = Math.floor(100000 + Math.random() * 900000);
+
+    const items = { name, inStock, description, price, imageUrl, id }
+    const lastProductId = Object.keys(localStorage).length;
+
+    localStorage.setItem(`produto_${lastProductId}`, JSON.stringify(items));
   }
 
   handleInput = (e) => {
@@ -73,10 +80,8 @@ class AddItem extends Component {
             onChange={this.handleInput}
             required />
           <input
-            type="number"
+            type="text"
             name="price"
-            min="0"
-            step="any"
             placeholder="Preço (apenas números)"
             defaultValue={price}
             onChange={this.handleInput}

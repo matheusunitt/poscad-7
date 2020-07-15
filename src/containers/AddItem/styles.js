@@ -70,14 +70,14 @@ export const LinkSecondary = styled(Link)`
 `;
 
 export const LinkDelete = styled(Link)`
-  background-color: var(--btn - delete -normal);
+  background-color: var(--btn-delete-normal);
   color: var(--white);
 
   &:hover {
-    background-color: var(--btn - delete -hover);
+    background-color: var(--btn-delete-hover);
   }
 
   &:active {
-    background-color: var(--btn - delete -normal);
+    background-color: var(--btn-delete-normal);
   }
 `;

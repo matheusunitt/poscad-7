@@ -29,12 +29,13 @@ export const MainHeader = styled.header`
 export const ItemList = styled.section`
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
 `;
 
 export const Item = styled.div`
   height: auto;
-  width: auto;
+  width: 150px;
   display: flex;
   flex-direction: column;
   margin: 15px;
@@ -43,10 +44,13 @@ export const Item = styled.div`
 export const ItemBody = styled.div`
   height: 150px;
   width: 150px;
+  border: 1px solid var(--grey);
 
   & > img {
     background-size: contain;
     background-repeat: no-repeat;
+    height: 150px;
+    width: 150px;
   }
 `;
 
@@ -57,6 +61,7 @@ export const ItemFooter = styled.footer`
   padding: 10px 0;
   width: 100%;
   height: auto;
+  overflow: hidden;
 
   & > p {
     padding: 8px 0 15px 0;

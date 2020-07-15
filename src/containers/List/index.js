@@ -10,30 +10,33 @@ import {
   LinkDelete,
 } from './styles';
 
+import undefinedImage from '../../assets/undefined.png';
+
 class List extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      products: [
-        {
-          id: 0,
-          image: "https://vd4hk1r2sz24f3i40xkdrbhd-wpengine.netdna-ssl.com/wp-content/uploads/sites/24/2017/06/aquatic-icons-150px.png",
-          title: "Product 1",
-        },
-        {
-          id: 1,
-          image: "https://vd4hk1r2sz24f3i40xkdrbhd-wpengine.netdna-ssl.com/wp-content/uploads/sites/24/2017/06/aquatic-icons-150px.png",
-          title: "Product 2",
-        }
-        ,
-        {
-          id: 3,
-          image: "https://vd4hk1r2sz24f3i40xkdrbhd-wpengine.netdna-ssl.com/wp-content/uploads/sites/24/2017/06/aquatic-icons-150px.png",
-          title: "Product 3",
-        }
-      ]
+      produtos: [],
     }
+  }
+
+  componentDidMount = () => {
+    this.getItemsFromStorage();
+  }
+
+  getItemsFromStorage = () => {
+    let i = 0;
+    let lista = []
+
+    let storageKeys = Object.keys(localStorage);
+
+    for (i of storageKeys) {
+      let valor = JSON.parse(localStorage.getItem(i));
+      lista.push(valor);
+    }
+
+    this.setState({ produtos: lista }, () => console.log(this.state.produtos));
   }
 
   goToLinkEdit = () => {
@@ -41,12 +44,16 @@ class List extends Component {
     history.push(`/editar/${this.props.id}`);
   }
 
-  handleRemoveButton = () => {
-    alert('Not implemented yet.');
+  handleRemoveButton = (e) => {
+    let storageKeys = Object.keys(localStorage);
+
+    const refId = parseInt(e.target.dataset.ref);
+    localStorage.removeItem(`produto_${refId}`);
+    this.getItemsFromStorage();
   }
 
   render() {
-    const { products } = this.state;
+    const { produtos } = this.state;
     return (
       <>
         <MainHeader>
@@ -54,15 +61,15 @@ class List extends Component {
         </MainHeader>
 
         <ItemList>
-          {products.map(product => (
-            <Item className="item">
+          {produtos.map((produto, index) => (
+            <Item className="item" key={produto.id}>
               <ItemBody>
-                <img src={product.image} alt="" />
+                <img src={produto.image === '' ? undefinedImage : produto.image} alt="" />
               </ItemBody>
               <ItemFooter>
-                <p>{product.title}</p>
-                <Link href={`/editar/${product.id}`}>Editar</Link>
-                <LinkDelete onClick={this.handleRemoveButton}>Remover</LinkDelete>
+                <p>{produto.name}</p>
+                <Link href={`/editar/${produto.id}`}>Editar</Link>
+                <LinkDelete data-ref={index} onClick={this.handleRemoveButton}>Remover</LinkDelete>
               </ItemFooter>
             </Item>
           ))}

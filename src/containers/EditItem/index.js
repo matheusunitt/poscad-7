@@ -20,15 +20,26 @@ class EditItem extends Component {
     }
   }
 
+  componentDidMount = () => {
+    const { match: { params } } = this.props;
+    console.log(params.id);
+  }
+
   handleFormSend = (e) => {
     const { name, inStock, description, price, imageUrl } = this.state;
 
     e.preventDefault();
 
-    if (name == '' || inStock == '' || description == '' || price == '' || imageUrl == '') {
-      alert('One or more values empty.');
+    if (name === '' || inStock === '' || description === '' || price === '' || imageUrl === '') {
+      alert('Campos vazios detectados! Preencha-os antes de enviar.');
       return;
     }
+
+    const items = [name, inStock, description, price, imageUrl]
+
+    const lastProductId = Object.keys(localStorage).length;
+
+    localStorage.setItem(`produto_${lastProductId + 1}`, JSON.stringify(items));
   }
 
   handleInput = (e) => {
@@ -73,10 +84,8 @@ class EditItem extends Component {
             onChange={this.handleInput}
             required />
           <input
-            type="number"
+            type="text"
             name="price"
-            min="0"
-            step="any"
             placeholder="Preço (apenas números)"
             defaultValue={price}
             onChange={this.handleInput}

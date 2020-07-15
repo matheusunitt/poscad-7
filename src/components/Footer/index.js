@@ -6,7 +6,7 @@ import {
 
 const Footer = () => (
   <Container>
-    <p>&copy; 2020 - React loja.</p>
+    <p>&copy; 2020 - Jeffrey Matheus.</p>
   </Container>
 );
 
