@@ -50,8 +50,12 @@ class AddItem extends Component {
     return (
       <>
         <MainHeader>
-          <LinkSecondary href="/">Cancelar</LinkSecondary>
-          <Link onClick={this.handleFormSend}>Adicionar item</Link>
+          <LinkSecondary href="/">
+            <i class="fa fa-ban" aria-hidden="true"></i> Cancelar
+          </LinkSecondary>
+          <Link onClick={this.handleFormSend}>
+            <i class="fa fa-check" aria-hidden="true"></i> Adicionar item
+          </Link>
         </MainHeader>
 
         <Form onSubmit={this.handleFormSend}>

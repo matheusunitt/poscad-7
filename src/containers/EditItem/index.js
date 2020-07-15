@@ -17,31 +17,41 @@ class EditItem extends Component {
       description: '',
       price: '',
       imageUrl: '',
+      referenceId: '',
     }
   }
 
   componentDidMount = () => {
     //const id = this.props.match.params.id;
-    this.getItemsFromStorage(1);
+    //this.getItemsFromStorage(id);
   }
 
   getItemsFromStorage = (id) => {
-    let storageKeys = localStorage.getItem(`produto_${id}`);
-    console.log(storageKeys);
+    const { produtos } = this.state;
 
-    //lista.push(valor);
+    // Pega o objeto que possuir o id especificado
+    const index = produtos.findIndex(item => item.id == id);
 
-    /* const { name, inStock, description, price, imageUrl } = itemById;
-  
-    this.setState({ name });
-    this.setState({ inStock });
-    this.setState({ description });
-    this.setState({ price });
-    this.setState({ imageUrl }); */
+    let lista = [];
+
+    const storage = JSON.parse(localStorage.getItem(`produto_${index}`));
+
+    for (let value of Object.values(storage)) {
+      lista.push(value);
+    }
+
+    this.setState({
+      name: lista[0],
+      inStock: lista[1],
+      description: lista[2],
+      price: lista[3],
+      imageUrl: lista[4],
+      referenceId: id,
+    });
   }
 
   handleFormSend = (e) => {
-    const { name, inStock, description, price, imageUrl } = this.state;
+    const { name, inStock, description, price, imageUrl, referenceId } = this.state;
 
     e.preventDefault();
 
@@ -52,9 +62,7 @@ class EditItem extends Component {
 
     const items = [name, inStock, description, price, imageUrl]
 
-    const lastProductId = Object.keys(localStorage).length;
-
-    localStorage.setItem(`produto_${lastProductId + 1}`, JSON.stringify(items));
+    localStorage.setItem(`produto_${referenceId}`, JSON.stringify(items));
   }
 
   handleInput = (e) => {
@@ -69,8 +77,12 @@ class EditItem extends Component {
     return (
       <>
         <MainHeader>
-          <LinkSecondary href="/">Cancelar</LinkSecondary>
-          <Link onClick={this.handleFormSend}>Adicionar item</Link>
+          <LinkSecondary href="/">
+            <i class="fa fa-ban" aria-hidden="true"></i> Cancelar
+          </LinkSecondary>
+          <Link onClick={this.handleFormSend}>
+            <i class="fa fa-check" aria-hidden="true"></i> Salvar alterações
+          </Link>
         </MainHeader>
 
         <Form onSubmit={this.handleFormSend}>

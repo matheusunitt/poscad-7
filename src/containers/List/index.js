@@ -26,24 +26,33 @@ class List extends Component {
   }
 
   getItemsFromStorage = () => {
-    let i = 0;
-    let lista = []
+    let lista = [];
+    let storage = localStorage;
 
-    let storageKeys = Object.keys(localStorage);
-
-    for (i of storageKeys) {
-      let valor = JSON.parse(localStorage.getItem(i));
-      lista.push(valor);
+    for (let values of Object.values(storage)) {
+      lista.push(JSON.parse(values));
     }
 
     this.setState({ produtos: lista });
   }
 
   handleRemoveButton = (e) => {
-    let storageKeys = Object.keys(localStorage);
+    const { produtos } = this.state;
 
-    const refId = parseInt(e.target.dataset.ref);
-    localStorage.removeItem(`produto_${refId}`);
+    const referenceId = parseInt(e.target.dataset.ref);
+
+    // Pega o objeto que possuir o id especificado
+    const index = produtos.findIndex(item => item.id == referenceId);
+
+    // Remove o item a partir de seu index e limpa o local storage
+    produtos.splice(index, 1);
+    localStorage.clear();
+
+    // Para cada produto no state, adicione-o no local storage
+    produtos.map((produto, index) => {
+      localStorage.setItem(`produto_${index}`, JSON.stringify(produto));
+    });
+
     this.getItemsFromStorage();
   }
 
@@ -52,19 +61,25 @@ class List extends Component {
     return (
       <>
         <MainHeader>
-          <Link href="/novo">Adicionar novo item</Link>
+          <Link href="/novo">
+            <i class="fa fa-plus-circle" aria-hidden="true"></i> Adicionar novo item
+          </Link>
         </MainHeader>
 
         <ItemList>
-          {produtos.map((produto, index) => (
+          {produtos.map(produto => (
             <Item className="item" key={produto.id}>
               <ItemBody>
                 <img src={produto.image === '' ? undefinedImage : produto.image} alt="" />
               </ItemBody>
               <ItemFooter>
                 <p>{produto.name}</p>
-                <Link href={`/editar/${produto.id}`}>Editar</Link>
-                <LinkDelete data-ref={index} onClick={this.handleRemoveButton}>Remover</LinkDelete>
+                <Link href={`/editar/${produto.id}`}>
+                  Editar
+                </Link>
+                <LinkDelete data-ref={produto.id} onClick={this.handleRemoveButton}>
+                  Remover
+                </LinkDelete>
               </ItemFooter>
             </Item>
           ))}
