@@ -15,7 +15,7 @@ class AddItem extends Component {
       name: '',
       inStock: '',
       description: '',
-      price: 0,
+      price: '',
       imageUrl: '',
     }
   }

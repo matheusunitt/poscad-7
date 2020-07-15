@@ -36,12 +36,7 @@ class List extends Component {
       lista.push(valor);
     }
 
-    this.setState({ produtos: lista }, () => console.log(this.state.produtos));
-  }
-
-  goToLinkEdit = () => {
-    const history = this.props.history;
-    history.push(`/editar/${this.props.id}`);
+    this.setState({ produtos: lista });
   }
 
   handleRemoveButton = (e) => {

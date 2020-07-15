@@ -15,14 +15,29 @@ class EditItem extends Component {
       name: '',
       inStock: '',
       description: '',
-      price: 0,
+      price: '',
       imageUrl: '',
     }
   }
 
   componentDidMount = () => {
-    const { match: { params } } = this.props;
-    console.log(params.id);
+    //const id = this.props.match.params.id;
+    this.getItemsFromStorage(1);
+  }
+
+  getItemsFromStorage = (id) => {
+    let storageKeys = localStorage.getItem(`produto_${id}`);
+    console.log(storageKeys);
+
+    //lista.push(valor);
+
+    /* const { name, inStock, description, price, imageUrl } = itemById;
+  
+    this.setState({ name });
+    this.setState({ inStock });
+    this.setState({ description });
+    this.setState({ price });
+    this.setState({ imageUrl }); */
   }
 
   handleFormSend = (e) => {
